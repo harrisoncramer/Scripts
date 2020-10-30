@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Script for quickly cleaning .DS_Store files from within current folder
+find . -name '.DS_Store' -type f -delete

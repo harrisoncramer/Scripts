@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Delete all swp files in current folder
+
+find . -type f -name "*.swp" -delete
+

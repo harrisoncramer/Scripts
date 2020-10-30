@@ -1,0 +1,156 @@
+#!/bin/bash
+
+# date variable
+DATE="$(date +"%m-%d-%y")"
+OPTIONS=(STATE OLC DOD DHS CBP);
+
+# input for newfile
+read -p 'Name of file: ' NAME_OF_FOIA_LETTER
+OUTPUT_FILE="$NAME_OF_FOIA_LETTER.md"
+
+# Assign Agency name...
+read -p 'Agency (to see list of options, type "options"): ' AGENCY
+if [[ -z $AGENCY ]]; then
+  echo 'You must enter an agency.'
+  exit 1;
+fi
+if [[ $AGENCY == 'options' ]]; then
+  printf '%s\n' "${OPTIONS[@]}"
+  read -p 'Please enter an agency: ' AGENCY
+fi
+
+if echo "${OPTIONS[@]}" | grep -wvq "$AGENCY"; then
+  echo 'That is not an option'
+  exit 1;
+fi
+
+DOCUMENTS=()
+
+count=0
+while true; do
+  (( count++ ))
+  read -p "Document ${count} sought (or type 'done'): " NEW_DOCUMENT
+  if [[ -z $NEW_DOCUMENT ]]; then
+    echo 'Document cannot be empty.'
+    (( count-- ))
+    echo
+    continue
+  fi
+  if [[ "$NEW_DOCUMENT" == "done" ]]; then
+    break
+  fi
+  DOCUMENTS+=("$NEW_DOCUMENT")
+done
+
+KEYWORDS=()
+count=0
+read -p "Do you wish to use keywords (y/n)? " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  echo
+  while true; do
+    (( count++ ))
+    read -p "Keyword/phrase ${count} (or type 'done'): " KEYWORD
+    if [[ -z $KEYWORD ]]; then
+      echo 'Keyword cannot be empty.'
+      (( count-- ))
+      echo
+      continue
+    fi
+    if [[ $KEYWORD == "done" ]]; then
+      break
+    fi
+    KEYWORDS+=("$KEYWORD")
+  done
+fi
+
+read -p "Do you wish to use expedited processing (y/n)? " -n 1 -r
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo
+    read -p "Rationale: " RATIONALE
+    NO_RATIONALE='false'
+  else 
+    NO_RATIONALE='true'
+fi
+
+echo "--"
+echo "NAME OF FILE: "
+echo "${OUTPUT_FILE}"
+echo
+
+echo "AGENCY:"
+echo "${AGENCY}"
+echo
+
+echo "DOCUMENTS SOUGHT:"
+  printf '%s\n' "${DOCUMENTS[@]}"
+echo
+
+if [[ -z "$KEYWORDS" ]]; then
+  echo "NO KEYWORDS"
+else 
+  echo "KEYWORDS:"
+  printf '%s\n' "${KEYWORDS[@]}"
+fi
+echo
+
+if [[ $NO_RATIONALE == "true" ]]; then
+  echo "NO EXPEDITED RATIONALE"
+else 
+  echo "EXPEDITED PROCESSING:"
+  echo "$RATIONALE"
+fi
+echo "--"
+
+buildFOIA () {
+  cat <<EOF > ~/Desktop/${OUTPUT_FILE}
+
+  <div align="right">Harrison Cramer</div>
+  <div align="right">National Journal</div>
+  <div align="right">600 New Hampshire Avenue, N.W.</div>
+  <div align="right">Washington, D.C. 20037</div>
+  ![logo](/Users/harrisoncramer/Scripts/logo.png)
+  
+  **$DATE**
+  To Whom It May Concern,
+  
+  My name is Harrison Cramer, and This is a request under the Freedom of Information Act (5 U.S.C. § 552).
+
+  <ins>Records Requested</ins>:
+
+  $(echo "${DOCUMENTS[@]}" | xargs -n1 )
+  ${DOCUMENTS[@]}
+
+  In conducting the search please use, but do not limit the search to include the following keywords: ${KEYWORDS[*]}. 
+
+  <ins>Fee Waiver</ins>
+
+  I make this request of behalf of National Journal, a political magazine distributed to the public in Washington metropolitan area. The records disclosed pursuant to this request will be used in the preparation of news articles for dissemination to the public. Accordingly, I request you waive all fees in the public interest because the furnishing of the information sought by this request will primarily benefit the public and is likely to contribute significantly to the public understanding of the operations or activities of the government. If, however, you decline to waive all fees, I request that you notify me if you plan to charge.
+
+  <ins>Certification</ins>
+
+  I certify that everything in this FOIA request is true and correct to the best of my knowledge and belief.
+
+  Please contact hcramer@nationaljournal.com with any questions about this request. Thank you very much. 
+
+  Sincerely,
+  <ins>s/ Harrison Cramer</ins>
+  Harrison Cramer  $line
+
+  National Security Correspondent $line
+  National Journal $line
+  **Email**: hcramer@nationaljournal.com $line 
+  **Phone**: (202)-266-7833 
+EOF
+}
+
+read -p 'Is this information correct (y/n)? ' -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  echo "Creating $NAME_OF_FOIA_LETTER FOIA letter on your desktop..."
+
+  buildFOIA
+  mdpdf ~/Desktop/${OUTPUT_FILE}
+
+else
+  echo 'there was a mistake'
+  exit 1
+fi

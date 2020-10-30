@@ -1,0 +1,4 @@
+#!/bin/bash
+# Uses jq to convert the input of a json file into csv
+
+jq -r '(.[0] | keys_unsorted) as $keys | $keys, map([.[ $keys[] ]])[] | @csv'
