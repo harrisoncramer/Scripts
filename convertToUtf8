@@ -1,0 +1,5 @@
+#!/bin/bash
+
+file=$1 
+echo $file
+iconv -f UTF-16LE -t UTF-8 $file > outfile.txt
