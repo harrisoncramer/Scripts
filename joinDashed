@@ -1,0 +1,10 @@
+#!/bin/bash
+
+file=$1
+
+#sed 's/\(\w\)\- \([a-z]\)/\1\2/g' "$file" > "$file.bak1"
+perl -0777 -pe 's/(\w)-\h+(\w)/$1$2/g; s/(\w)-\R(\w+)\s+/$1$2\n/g' "$file" > "$file.bak1"
+sed -e ':a' -e '/-$/{N;s/-\n//;ba
+}' "$file.bak1" > "$file.bak"
+rm "$file.bak1"
+mv "$file.bak" "$file"

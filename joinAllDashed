@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+for file in ./*.txt
+do
+perl -0777 -pe 's/(\w)-\h+(\w)/$1$2/g; s/(\w)-\R(\w+)\s+/$1$2\n/g' "$file" > "$file.bak1"
+sed -e ':a' -e '/-$/{N;s/-\n//;ba
+}' "$file.bak1" > "$file.bak"
+rm "$file.bak1"
+mv "$file.bak" "$file"
+done
