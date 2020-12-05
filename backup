@@ -1,0 +1,4 @@
+#!/bin/bash
+
+fileOrFolder="./$1"
+cp -r "$fileOrFolder" ~/Desktop
