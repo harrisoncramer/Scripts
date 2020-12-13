@@ -1,4 +1,4 @@
 #!/bin/bash
-
+date=$(date +"%s")
 file="./$1"
-mv "$file" ~/.Trash
+mv "./$1" ~/.Trash/"$1.$date"
