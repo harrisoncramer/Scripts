@@ -1,0 +1,78 @@
+	<section class="container section-padding" id="results" name="results">
+		<div class="col-md-4">
+						<form id="intel-search-form" action="/ic-on-the-record-database/advanced-search#results" method="get">
+				<ul class="list-unstyled" id="">
+					<li class="clearfix">
+						<div class="subclass">
+							<label class="group-label">Keyword</label>
+						</div>
+						<input class="input" name="keyword" placeholder="Type keyword here" type="text" value="">
+					</li>
+					<li class="clearfix">
+						<div class="subclass">
+							<label class="group-label">Filter By Release Date</label>
+							<div class="select-container">
+								<select name="date">
+									<option value="">- Choose -</option>
+								<option value="9"  selected="selected">Custom Range</option>								</select>
+							</div>
+							<div id="date-range" >
+								<div class="input-daterange input-group" id="datepicker">
+									<input type="text" class="input-sm form-control" name="sdate" value="02/24/2021" />
+									<span class="input-group-addon">to</span>
+									<input type="text" class="input-sm form-control" name="edate" value="02/25/2021" />
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="subclass">
+							<label class="group-label">Hot Topics</label>
+							<div class="select-container">
+								<select name="topic">
+									<option value="">Select tags</option>
+									<option value="Civil+Liberties" >Civil Liberties</option><option value="FISA" >FISA</option><option value="FISC" >FISC</option><option value="Section+215" >Section 215</option><option value="Section+702" >Section 702</option>								</select>
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="subclass">
+							<label class="group-label">Content Types</label>
+							<div class="select-container">
+								<select name="catid">
+									<option value="">- Select Content Type -</option>
+									<option rel="1" value="9" >Declassified</option><option rel="1" value="10" >Statistical Transparency Report</option><option rel="1" value="11" >Fact Sheet</option><option rel="1" value="12" >Testimony</option><option rel="1" value="13" >Official Statement</option><option rel="1" value="14" >Oversight</option><option rel="1" value="15" >Speeches & Interviews</option>								</select>
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="subclass">
+							<label class="group-label">Show Only</label>
+															<div>
+									<input class="exfield exgroup1" id="item_type_2" name="item_type[]" type="checkbox" value="2" >
+									<label class="lb-checkbox" for="item_type_2">Original Document</label>
+								</div>
+															<div>
+									<input class="exfield exgroup1" id="item_type_3" name="item_type[]" type="checkbox" value="3" >
+									<label class="lb-checkbox" for="item_type_3">Official Statement</label>
+								</div>
+													</div>
+					</li>
+					<li class="last-item clearfix">
+						<div class="subclass">
+							<input class="btn-intel btn-alt-2" name="btnSubmit" onclick="submit();" type="button" value="Search" />
+							<input class="btn-intel btn-alt-2" name="btnReset" type="button" value="Reset" />
+						</div>
+					</li>
+				</ul>
+			</form>
+		</div>
+		<div class="col-md-7 col-md-offset-1 search-list">
+			<div class="">
+				<h2 class="clr-slate uc">Results</h2>
+				<h4 class="results-summary">No results</h4>
+				<ul class="list-unstyled">
+								</ul>
+							</div>
+		</div>
+	</section>

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# The outline of a quick and dirty way to check whether anything between specific HTML fields has changed.
+# Run this scrip on a CRON scheduler and change the input of the cURL command and the sed command to customize.
+
+name="ODNI"
+oldfile="ODNIoriginal"
+newfile="ODNInew"
+url="https://www.intelligence.gov/ic-on-the-record-database/advanced-search?keyword=&date=9&sdate=02%2F24%2F2021&edate=02%2F25%2F2021&topic=&catid="
+
+res=$(curl "$url" \
+  -H 'authority: www.intelligence.gov' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'dnt: 1' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_2_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.192 Safari/537.36' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'sec-fetch-dest: document' \
+  -H 'referer: https://www.intelligence.gov/ic-on-the-record-database/advanced-search?keyword=&date=9&sdate=02%2F25%2F2021&edate=02%2F25%2F2021&topic=&catid=' \
+  -H 'accept-language: en-US,en;q=0.9,ar;q=0.8,af;q=0.7,ru;q=0.6' \
+  -H 'cookie: f9abe696a8d21897acf93905250dca5d=1oncvbeoprusrrq5p0l1c13315; _ga=GA1.2.961649359.1614269704; _gid=GA1.2.213366214.1614269704; _gat_GSA_ENOR0=1; _gat_GSA_ENOR1=1; _gat_gtag_UA_24149679_3=1; RT="z=1&dm=intelligence.gov&si=tnjtnkyibe&ss=kll2i2sb&sl=5&tt=wb&obo=4&ld=977f&r=ea7ea70e33d7a8be7b1f29e0c9296cc6&ul=977i"' \
+  --compressed)
+
+echo "$res" > "./sitesChecked/${newfile}.txt"
+newFiltered=$(sed -n '/<section class="container section-padding" id="results" name="results">/I,/<\/section>/I p' "./sitesChecked/${newfile}.txt");
+echo "$newFiltered" > "./sitesChecked/${newfile}.txt"
+
+
+if cmp -s "./sitesChecked/${oldfile}.txt" "./sitesChecked/${newfile}.txt" ; then
+   echo "Nothing changed"
+else
+  echo "$newFiltered" > "./sitesChecked/${oldfile}.txt"
+  echo "$newFiltered"
+  comm="display notification \"New ${name} File\""
+  osascript -e "${comm}"
+fi
