@@ -32,7 +32,7 @@ if cmp -s "./sitesChecked/${oldfile}.txt" "./sitesChecked/${newfile}.txt" ; then
    echo "Nothing changed"
 else
   echo "$newFiltered" > "./sitesChecked/${oldfile}.txt"
-  echo "$newFiltered"
   comm="display notification \"New ${name} File\""
   osascript -e "${comm}"
+  open "${url}"
 fi
