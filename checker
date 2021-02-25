@@ -3,9 +3,12 @@
 # The outline of a quick and dirty way to check whether anything between specific HTML fields has changed.
 # Run this scrip on a CRON scheduler and change the input of the cURL command and the sed command to customize.
 
+echo "${PWD}"
+
 name="ODNI"
-oldfile="ODNIoriginal"
-newfile="ODNInew"
+path="/Users/harrisoncramer/Scripts/sitesChecked"
+oldfile="ODNIoriginal.txt"
+newfile="ODNInew.txt"
 url="https://www.intelligence.gov/ic-on-the-record-database/advanced-search?keyword=&date=9&sdate=02%2F24%2F2021&edate=02%2F25%2F2021&topic=&catid="
 
 res=$(curl "$url" \
@@ -23,15 +26,15 @@ res=$(curl "$url" \
   -H 'cookie: f9abe696a8d21897acf93905250dca5d=1oncvbeoprusrrq5p0l1c13315; _ga=GA1.2.961649359.1614269704; _gid=GA1.2.213366214.1614269704; _gat_GSA_ENOR0=1; _gat_GSA_ENOR1=1; _gat_gtag_UA_24149679_3=1; RT="z=1&dm=intelligence.gov&si=tnjtnkyibe&ss=kll2i2sb&sl=5&tt=wb&obo=4&ld=977f&r=ea7ea70e33d7a8be7b1f29e0c9296cc6&ul=977i"' \
   --compressed)
 
-echo "$res" > "./sitesChecked/${newfile}.txt"
-newFiltered=$(sed -n '/<section class="container section-padding" id="results" name="results">/I,/<\/section>/I p' "./sitesChecked/${newfile}.txt");
-echo "$newFiltered" > "./sitesChecked/${newfile}.txt"
+echo "$res" > "${path}/${newfile}"
+newFiltered=$(sed -n '/<section class="container section-padding" id="results" name="results">/I,/<\/section>/I p' "${path}/${newfile}");
+echo "$newFiltered" > "${path}/${newfile}"
 
 
-if cmp -s "./sitesChecked/${oldfile}.txt" "./sitesChecked/${newfile}.txt" ; then
+if cmp -s "${path}/${oldfile}" "${path}/${newfile}" ; then
    echo "Nothing changed"
 else
-  echo "$newFiltered" > "./sitesChecked/${oldfile}.txt"
+  echo "$newFiltered" > "${path}/${oldfile}"
   comm="display notification \"New ${name} File\""
   osascript -e "${comm}"
   open "${url}"

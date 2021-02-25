@@ -1,4 +1,4 @@
-THIS SHOULD BE OVERWRITTEN	
+	<section class="container section-padding" id="results" name="results">
 		<div class="col-md-4">
 						<form id="intel-search-form" action="/ic-on-the-record-database/advanced-search#results" method="get">
 				<ul class="list-unstyled" id="">
