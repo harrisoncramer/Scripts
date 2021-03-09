@@ -88,7 +88,7 @@
 							<span class="title">Content Type: </span>
 							<a href="/ic-on-the-record-database/advanced-search?catid=13#results">Official Statement</a>
 						</div>
-												<p> Declassified by Director of National Intelligence Avril Haines February 25, 2021 Assessing the Saudi Government's Role in the Killing of Jamal Khashoggi Consistent with Sections 1277 and 5714 of the&#8230;</p>
+												<p> Declassified by Director of National Intelligence Avril Haines February 26, 2021 Assessing the Saudi Government's Role in the Killing of Jamal Khashoggi Consistent with Sections 1277 and 5714 of the&#8230;</p>
 						<p class="published_date">February, 26 2021</p>
 						<a href="/index.php/ic-on-the-record-database/results/1042-assessing-the-saudi-government-s-role-in-the-killing-of-jamal-khashoggi" class="item-link" >Read more...</a>
 					</li>
