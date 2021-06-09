@@ -18,7 +18,7 @@ if [ $? != 0 ]; then
       send-keys 'clear' Enter\; \
       rename-window 'desktop'\; \
       previous-window \; \
-      send-keys 'v' Enter\; \
+      send-keys 'v' Enter\;
 else
   tmux attach -t $project_name
 fi
