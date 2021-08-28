@@ -1,0 +1,6 @@
+for file in *; do # Iterate over the jpgs in the current directory.
+  dd if=/dev/urandom count=1 2>/dev/null | sha256sum | ( # Gather 512 bytes from /dev/urandom
+    read rnd _ # Read the first "word" in the sha256sum output
+    mv "$file" ${rnd} # rename the jpg.
+  )
+done
