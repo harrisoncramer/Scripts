@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# Open my git projects
-/usr/bin/open -a "/Applications/Chrome.app" 'https://github.com/KingOfCramers?tab=repositories'

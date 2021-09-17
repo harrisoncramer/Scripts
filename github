@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Open my git repos
+/usr/bin/open -a "/Applications/Chrome.app" 'https://github.com/harrisoncramer?tab=repositories'

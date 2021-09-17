@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# A script for renaming all files in a current folder randomly.
+
 for file in *; do # Iterate over the jpgs in the current directory.
   extension="${file#*.}"
   dd if=/dev/urandom count=1 2>/dev/null | sha256sum | ( # Gather 512 bytes from /dev/urandom

@@ -1,7 +1,0 @@
-#!/bin/bash
-
-# Start up redis server 
-
-redis-server /usr/local/etc/redis.conf
-redis-server /usr/local/etc/redis-dev.conf
-/usr/bin/open -a "/Applications/Redis Desktop Manager.app"

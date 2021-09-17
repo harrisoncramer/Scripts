@@ -1,14 +1,17 @@
 #!/bin/bash
 
-# date variable
+# This tool was useful in my former capacity as a journalist
+# to quickly create Freedom of Information Requests. However,
+# there are more robust tools on the market today that I would 
+# recommend instead. Check out https://foia.wiki/wiki/Main_Page
+# for some good tools.
+
 DATE="$(date +"%m-%d-%y")"
 OPTIONS=(STATE OLC DOD DHS CBP);
 
-# input for newfile
 read -p 'Name of file: ' NAME_OF_FOIA_LETTER
 OUTPUT_FILE="$NAME_OF_FOIA_LETTER.md"
 
-# Assign Agency name...
 read -p 'Agency (to see list of options, type "options"): ' AGENCY
 if [[ -z $AGENCY ]]; then
   echo 'You must enter an agency.'
