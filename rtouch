@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Creates a file and folder recursively
+
+if [ $# -eq 0 ]; then
+  echo 'Must provide file path.'
+  exit 1
+fi
+
+file="./$1"
+dir=$(dirname "$file")
+base=$(basename "$file")
+
+mkdir -p "$dir"
+touch "$file"
