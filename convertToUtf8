@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# Accepts one file as an input, converts it to UTF-8 then overwrites the old file
-file=$1 
-echo $file
-touch "$file.new"
-iconv -f UTF-16LE -t UTF-8 $file > "$file.new"
-mv "$file.new" "$file"
